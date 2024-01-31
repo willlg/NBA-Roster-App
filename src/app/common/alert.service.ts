@@ -10,7 +10,7 @@ export class AlertService {
 
   async presentAlert(subHeader : string, message : string) {
     const alert = await this.alertController.create({
-      header: 'Agenda de Contatos',
+      header: 'Oklahoma City Thunder',
       subHeader: subHeader,
       message: message,
       buttons: ['OK'],

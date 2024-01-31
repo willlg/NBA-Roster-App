@@ -47,6 +47,7 @@ export class SignupPage implements OnInit {
       this.alert.presentAlert('Erro', 'Erro ao preencher o formulário');
       return false;
     } else {
+      this.alert.simpleLoader();
       this.cadastrar();
       return true;
     }
@@ -55,10 +56,12 @@ export class SignupPage implements OnInit {
   private cadastrar(){
     this.authService.signUpWithEmailPassword(this.formCadastrar.value['email'], this.formCadastrar.value['senha'])
     .then((res)=> {
+      this.alert.dismissLoader();
       this.alert.presentAlert("Sucesso","Cadastro realizado com Sucesso!");
       this.router.navigate(["signin"]);
     })
     .catch((error)=> {
+      this.alert.dismissLoader();
       this.alert.presentAlert("Erro","Erro ao realizar Cadastro!");
       console.log(error.message);
     })

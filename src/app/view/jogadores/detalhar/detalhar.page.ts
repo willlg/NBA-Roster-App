@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/common/alert.service';
+import { Posicao } from 'src/app/model/entities/Enum';
 import Jogador from 'src/app/model/entities/Jogador';
-import { FirebaseService } from 'src/app/model/services/firestore.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/model/services/auth.service';
+import { FirebaseService } from 'src/app/model/services/firestore.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -12,6 +15,9 @@ import { AuthService } from 'src/app/model/services/auth.service';
   styleUrls: ['./detalhar.page.scss'],
 })
 export class DetalharPage implements OnInit {
+  public formEditar: FormGroup;
+
+
   nome!: string;
   idade!: number;
   altura!: number;
@@ -21,27 +27,28 @@ export class DetalharPage implements OnInit {
   jogador: Jogador;
   indice: number;
   edicao: boolean = true;
-  imagem: any;  
+  imagem!: any;  
   user: any;
 
   constructor(
-    private router: Router,
-    private firebase: FirebaseService,
-    private alertController: AlertController, private auth : AuthService
+    private alert: AlertService,
+    private router : Router,
+    private firebase: FirebaseService, private alertController: AlertController, private auth: AuthService, private formBuilder: FormBuilder
   ) {
     this.user = this.auth.getUserLogged();
   }
 
   ngOnInit() {
     this.jogador = history.state.jogador;
-    this.nome = this.jogador.nome;
-    this.idade = this.jogador.idade;
-    this.altura = this.jogador.altura;
-    this.peso = this.jogador.peso;
-    this.universidade = this.jogador.universidade;
-    this.posicao = this.jogador.posicao;
+    this.formEditar = this.formBuilder.group({
+      nome: [this.jogador.nome, [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-Z]+$/)]],
+      idade: [this.jogador.idade, [Validators.required, Validators.min(16), Validators.max(42), Validators.pattern(/^[0-9]*$/)]],
+      altura: [this.jogador.altura, [Validators.required, Validators.min(170), Validators.max(240), Validators.pattern(/^[0-9]*$/)]],
+      peso: [this.jogador.peso, [Validators.required, Validators.min(70), Validators.max(200), Validators.pattern(/^[0-9]*$/)]],
+      universidade: [this.jogador.universidade, [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z]+$/)]],
+      posicao: [this.jogador.posicao, Validators.required]
+    });
   }
-
   
   uploadFile(imagem: any){
     this.imagem = imagem.files;
@@ -57,32 +64,36 @@ export class DetalharPage implements OnInit {
   }
 
   editar() {
-    if (this.nome && this.idade && this.altura && this.peso && this.universidade && this.posicao) {
-      let novo: Jogador = new Jogador(this.nome, this.idade, this.altura, this.peso, this.universidade, this.posicao);
+    if (this.formEditar.valid) {
+      let novo : Jogador = new Jogador(this.formEditar.value.nome, this.formEditar.value.idade, this.formEditar.value.altura, this.formEditar.value.peso, this.formEditar.value.universidade, this.formEditar.value.posicao);
       novo.id = this.jogador.id;
       novo.uid = this.user.uid;
-      if(this.imagem){
+      if (this.imagem) {
         this.firebase.uploadImage(this.imagem, novo);
-      }else{
-        novo.downloadURL = this.jogador.downloadURL;
-        this.firebase.update(novo, this.jogador.id);
+        this.alert.presentAlert('Sucesso', 'Jogador alterado com sucesso!');
+        this.router.navigate(['/home']);
+      } else {
+        this.firebase
+          .update(novo, this.jogador.id)
+          .then(() => {
+            this.alert.presentAlert(
+              'Sucesso',
+              'Jogador alterado com sucesso!'
+            );
+            this.router.navigate(['/home']);
+          })
+          .catch((error) => {
+            console.error('Erro ao atualizar o jogador', error);
+          });
       }
-      this.router.navigate(['/home']);
-    } 
-    else {
-      this.presentAlert('Erro', 'Por favor preencha todos os campos!');
+    } else {
+      this.alert.presentAlert(
+        'Erro',
+        'Preencha todos os campos obrigatórios corretamente!'
+      );
     }
   }
   
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header: header,
-      message: message,
-      buttons: ['OK']
-    });
-  
-    await alert.present();
-  }
 
   async confirmarEdicao() {
     const alert = await this.alertController.create({

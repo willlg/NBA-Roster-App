@@ -6,38 +6,60 @@
     <ion-title class="titulo-personalizado">CADASTRE UM JOGADOR</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
+ 
+ <ion-content>
   <ion-list>
-    <ion-item class="input-personalizado">
-      <ion-input label="Nome" label-placement="floating" fill="solid" placeholder="Insira o nome" [(ngModel)]="nome"></ion-input>
-    </ion-item>
-    <ion-item class="input-personalizado">
-      <ion-input label="Idade" label-placement="floating" fill="solid" placeholder="Insira a idade" [(ngModel)]="idade"></ion-input>
-    </ion-item>
-    <ion-item class="input-personalizado">
-      <ion-input label="Altura" label-placement="floating" fill="solid" placeholder="Insira a altura" [(ngModel)]="altura"></ion-input>
-    </ion-item>
-    <ion-item class="input-personalizado">
-      <ion-input label="Peso" label-placement="floating" fill="solid" placeholder="Insira o peso" [(ngModel)]="peso"></ion-input>
-    </ion-item>
-    <ion-item class="input-personalizado">
-      <ion-input label="Universidade" label-placement="floating" fill="solid" placeholder="Insira a universidade" [(ngModel)]="universidade"></ion-input>
-    </ion-item>
-    <ion-item class="input-personalizado">
-      <ion-select placeholder="Selecione a posição" [(ngModel)]="posicao">
-        <ion-select-option value="ShootingGuard">Shooting Guard</ion-select-option>
-        <ion-select-option value="PointGuard">Point Guard</ion-select-option>
-        <ion-select-option value="SmallForward">Small Forward</ion-select-option>
-        <ion-select-option value="PowerForward">Power Forward</ion-select-option>
-        <ion-select-option value="Center">Center</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-button size="default" color="success" shape="round" >
-        <input type="file"  (change)="uploadFile($event.target)" />
-      </ion-button>
-    </ion-item>
-    <ion-button expand="block" (click)="cadastrar()">Cadastrar</ion-button>
-  </ion-list>
-</ion-content>
+    <form [formGroup]="formCadastrarJ" (ngSubmit)="submitForm()">
+       <ion-item class="input-personalizado">
+         <ion-input label="Nome" label-placement="floating" fill="solid" placeholder="Insira o nome" formControlName="nome"></ion-input>
+         <span *ngIf="formCadastrarJ.get('nome')?.touched && formCadastrarJ.get('nome')?.errors?.['required']">Nome é obrigatório</span>
+         <span *ngIf="formCadastrarJ.get('nome')?.touched && formCadastrarJ.get('nome')?.errors?.['minlength']">Nome deve ter pelo menos 2 caracteres</span>
+         <span *ngIf="formCadastrarJ.get('nome')?.touched && formCadastrarJ.get('nome')?.errors?.['pattern']">Nome deve conter apenas letras</span>
+       </ion-item>
+       <ion-item class="input-personalizado">
+         <ion-input label="Idade" label-placement="floating" fill="solid" placeholder="Insira a idade" formControlName="idade"></ion-input>
+         <span *ngIf="formCadastrarJ.get('idade')?.touched && formCadastrarJ.get('idade')?.errors?.['required']">Idade é obrigatória</span>
+         <span *ngIf="formCadastrarJ.get('idade')?.touched && formCadastrarJ.get('idade')?.errors?.['min']">Idade mínima é 16 anos</span>
+         <span *ngIf="formCadastrarJ.get('idade')?.touched && formCadastrarJ.get('idade')?.errors?.['max']">Idade máxima é 42 anos</span>
+         <span *ngIf="formCadastrarJ.get('idade')?.touched && formCadastrarJ.get('idade')?.errors?.['pattern']">Idade deve ser um número</span>
+       </ion-item>
+       <ion-item class="input-personalizado">
+         <ion-input label="Altura" label-placement="floating" fill="solid" placeholder="Insira a altura" formControlName="altura"></ion-input>
+         <span *ngIf="formCadastrarJ.get('altura')?.touched && formCadastrarJ.get('altura')?.errors?.['required']">Altura é obrigatória</span>
+         <span *ngIf="formCadastrarJ.get('altura')?.touched && formCadastrarJ.get('altura')?.errors?.['min']">Altura mínima é 170 cm</span>
+         <span *ngIf="formCadastrarJ.get('altura')?.touched && formCadastrarJ.get('altura')?.errors?.['max']">Altura máxima é 240 cm</span>
+         <span *ngIf="formCadastrarJ.get('altura')?.touched && formCadastrarJ.get('altura')?.errors?.['pattern']">Altura deve ser um número</span>
+       </ion-item>
+       <ion-item class="input-personalizado">
+         <ion-input label="Peso" label-placement="floating" fill="solid" placeholder="Insira o peso" formControlName="peso"></ion-input>
+         <span *ngIf="formCadastrarJ.get('peso')?.touched && formCadastrarJ.get('peso')?.errors?.['required']">Peso é obrigatório</span>
+         <span *ngIf="formCadastrarJ.get('peso')?.touched && formCadastrarJ.get('peso')?.errors?.['min']">Peso mínimo é 70 kg</span>
+         <span *ngIf="formCadastrarJ.get('peso')?.touched && formCadastrarJ.get('peso')?.errors?.['max']">Peso máximo é 200 kg</span>
+         <span *ngIf="formCadastrarJ.get('peso')?.touched && formCadastrarJ.get('peso')?.errors?.['pattern']">Peso deve ser um número</span>
+       </ion-item>
+       <ion-item class="input-personalizado">
+         <ion-input label="Universidade" label-placement="floating" fill="solid" placeholder="Insira a universidade" formControlName="universidade"></ion-input>
+         <span *ngIf="formCadastrarJ.get('universidade')?.touched && formCadastrarJ.get('universidade')?.errors?.['required']">Universidade é obrigatória</span>
+         <span *ngIf="formCadastrarJ.get('universidade')?.touched && formCadastrarJ.get('universidade')?.errors?.['minlength']">Universidade deve ter pelo menos 3 caracteres</span>
+         <span *ngIf="formCadastrarJ.get('universidade')?.touched && formCadastrarJ.get('universidade')?.errors?.['pattern']">Universidade deve conter apenas letras</span>
+       </ion-item>
+       <ion-item class="input-personalizado">
+         <ion-select placeholder="Selecione a posição" formControlName="posicao">
+           <ion-select-option value="ShootingGuard">Shooting Guard</ion-select-option>
+           <ion-select-option value="PointGuard">Point Guard</ion-select-option>
+           <ion-select-option value="SmallForward">Small Forward</ion-select-option>
+           <ion-select-option value="PowerForward">Power Forward</ion-select-option>
+           <ion-select-option value="Center">Center</ion-select-option>
+         </ion-select>
+       </ion-item>
+       <ion-item>
+         <ion-button size="default" color="success" shape="round" >
+           <input type="file" (change)="uploadFile($event.target)" />
+         </ion-button>
+       </ion-item>
+       <ion-button expand="block" (click)="cadastrar()">Cadastrar</ion-button>
+    </form>
+    </ion-list>
+   </ion-content>
+   
+ 
