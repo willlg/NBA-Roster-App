@@ -1,1 +1,30 @@
-<app-jogador [jogador]="jogadorSelecionado" [edicao]="true"></app-jogador>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="titulo-personalizado">DETALHES DO JOGADOR</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <form [formGroup]="formEditar" (ngSubmit)="editar()">
+    <ion-item class="input-personalizado">
+      <ion-toggle (ionChange)="habilitar()">Alterar Dados</ion-toggle>
+    </ion-item>
+    <ion-item *ngIf="jogador.downloadURL != null">
+      <img src="{{jogador.downloadURL}}" />
+    </ion-item>
+    <ion-button size="default" color="success" shape="round" disabled="{{edicao}}">
+      <input type="file" (change)="uploadFile($event.target)"/>
+    </ion-button>
+    <app-jogador [form]="formEditar"></app-jogador>
+  </form>
+ </ion-list>
+</ion-content>
+
+<div class="ion-padding">
+  <ion-button expand="block" (click)="confirmarEdicao()" [disabled]="edicao">Salvar</ion-button>
+  <ion-button expand="block" (click)="confirmarExclusao()" [disabled]="edicao" color="danger">Excluir</ion-button> 
+</div>

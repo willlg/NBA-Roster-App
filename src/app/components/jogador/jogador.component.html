@@ -1,60 +1,122 @@
-<ion-header>
-  <ion-toolbar>
-     <ion-buttons slot="start">
-       <ion-back-button defaultHref="/home"></ion-back-button>
-     </ion-buttons>
-     <ion-title>{{ edicao ? 'DETALHES DO JOGADOR' : 'CADASTRE UM JOGADOR' }}</ion-title>
-  </ion-toolbar>
-</ion-header>
- 
-<ion-content>
-  <ion-list>
-      <form [formGroup]="form" (ngSubmit)="edicao ? confirmarEdicao() : editar()">
-        <ion-item class="input-personalizado">
-          <ion-input label="Nome" label-placement="floating" fill="solid" placeholder="Insira o nome" formControlName="nome"></ion-input>
-          <span *ngIf="form.get('nome')?.touched && form.get('nome')?.errors?.['required']">Nome é obrigatório</span>
-          <span *ngIf="form.get('nome')?.touched && form.get('nome')?.errors?.['minlength']">Nome deve ter pelo menos 2 caracteres</span>
-          <span *ngIf="form.get('nome')?.touched && form.get('nome')?.errors?.['pattern']">Nome deve conter apenas letras</span>
-        </ion-item>
-        <ion-item class="input-personalizado">
-          <ion-input label="Idade" label-placement="floating" fill="solid" placeholder="Insira a idade" formControlName="idade"></ion-input>
-          <span *ngIf="form.get('idade')?.touched && form.get('idade')?.errors?.['required']">Idade é obrigatória</span>
-          <span *ngIf="form.get('idade')?.touched && form.get('idade')?.errors?.['min']">Idade mínima é 16 anos</span>
-          <span *ngIf="form.get('idade')?.touched && form.get('idade')?.errors?.['max']">Idade máxima é 42 anos</span>
-          <span *ngIf="form.get('idade')?.touched && form.get('idade')?.errors?.['pattern']">Idade deve ser um número</span>
-        </ion-item>
-        <ion-item class="input-personalizado">
-          <ion-input label="Altura" label-placement="floating" fill="solid" placeholder="Insira a altura" formControlName="altura"></ion-input>
-          <span *ngIf="form.get('altura')?.touched && form.get('altura')?.errors?.['required']">Altura é obrigatória</span>
-          <span *ngIf="form.get('altura')?.touched && form.get('altura')?.errors?.['min']">Altura mínima é 170 cm</span>
-          <span *ngIf="form.get('altura')?.touched && form.get('altura')?.errors?.['max']">Altura máxima é 240 cm</span>
-          <span *ngIf="form.get('altura')?.touched && form.get('altura')?.errors?.['pattern']">Altura deve ser um número</span>
-        </ion-item>
-        <ion-item class="input-personalizado">
-          <ion-input label="Peso" label-placement="floating" fill="solid" placeholder="Insira o peso" formControlName="peso"></ion-input>
-          <span *ngIf="form.get('peso')?.touched && form.get('peso')?.errors?.['required']">Peso é obrigatório</span>
-          <span *ngIf="form.get('peso')?.touched && form.get('peso')?.errors?.['min']">Peso mínimo é 70 kg</span>
-          <span *ngIf="form.get('peso')?.touched && form.get('peso')?.errors?.['max']">Peso máximo é 200 kg</span>
-          <span *ngIf="form.get('peso')?.touched && form.get('peso')?.errors?.['pattern']">Peso deve ser um número</span>
-        </ion-item>
-        <ion-item class="input-personalizado">
-          <ion-input label="Universidade" label-placement="floating" fill="solid" placeholder="Insira a universidade" formControlName="universidade"></ion-input>
-          <span *ngIf="form.get('universidade')?.touched && form.get('universidade')?.errors?.['required']">Universidade é obrigatória</span>
-          <span *ngIf="form.get('universidade')?.touched && form.get('universidade')?.errors?.['minlength']">Universidade deve ter pelo menos 3 caracteres</span>
-          <span *ngIf="form.get('universidade')?.touched && form.get('universidade')?.errors?.['pattern']">Universidade deve conter apenas letras</span>
-        </ion-item>
-        <ion-item class="input-personalizado">
-          <ion-select placeholder="Selecione a posição" formControlName="posicao">
-            <ion-select-option value="ShootingGuard">Shooting Guard</ion-select-option>
-            <ion-select-option value="PointGuard">Point Guard</ion-select-option>
-            <ion-select-option value="SmallForward">Small Forward</ion-select-option>
-            <ion-select-option value="PowerForward">Power Forward</ion-select-option>
-            <ion-select-option value="Center">Center</ion-select-option>
-          </ion-select>
-        </ion-item>
-      <ion-button expand="block" type="submit">{{ edicao ? 'Salvar' : 'Cadastrar' }}</ion-button>
-      <ion-button expand="block" color="danger" *ngIf="edicao" (click)="confirmarExclusao()">Excluir</ion-button>
-    </form>
-  </ion-list>
-</ion-content>
- 
+<ion-item class="input-personalizado">
+  <ion-input
+    label="Nome"
+    label-placement="floating"
+    fill="solid"
+    placeholder="Insira o nome"
+    formControlName="nome"
+  ></ion-input>
+  <span
+    *ngIf="form.get('nome')?.touched && form.get('nome')?.errors?.['required']"
+    >Nome é obrigatório</span
+  >
+  <span
+    *ngIf="form.get('nome')?.touched && form.get('nome')?.errors?.['minlength']"
+    >Nome deve ter pelo menos 2 caracteres</span
+  >
+  <span
+    *ngIf="form.get('nome')?.touched && form.get('nome')?.errors?.['pattern']"
+    >Nome deve conter apenas letras</span
+  >
+</ion-item>
+<ion-item class="input-personalizado">
+  <ion-input
+    label="Idade"
+    label-placement="floating"
+    fill="solid"
+    placeholder="Insira a idade"
+    formControlName="idade"
+  ></ion-input>
+  <span
+    *ngIf="form.get('idade')?.touched && form.get('idade')?.errors?.['required']"
+    >Idade é obrigatória</span
+  >
+  <span *ngIf="form.get('idade')?.touched && form.get('idade')?.errors?.['min']"
+    >Idade mínima é 16 anos</span
+  >
+  <span *ngIf="form.get('idade')?.touched && form.get('idade')?.errors?.['max']"
+    >Idade máxima é 42 anos</span
+  >
+  <span
+    *ngIf="form.get('idade')?.touched && form.get('idade')?.errors?.['pattern']"
+    >Idade deve ser um número</span
+  >
+</ion-item>
+<ion-item class="input-personalizado">
+  <ion-input
+    label="Altura"
+    label-placement="floating"
+    fill="solid"
+    placeholder="Insira a altura"
+    formControlName="altura"
+  ></ion-input>
+  <span
+    *ngIf="form.get('altura')?.touched && form.get('altura')?.errors?.['required']"
+    >Altura é obrigatória</span
+  >
+  <span
+    *ngIf="form.get('altura')?.touched && form.get('altura')?.errors?.['min']"
+    >Altura mínima é 170 cm</span
+  >
+  <span
+    *ngIf="form.get('altura')?.touched && form.get('altura')?.errors?.['max']"
+    >Altura máxima é 240 cm</span
+  >
+  <span
+    *ngIf="form.get('altura')?.touched && form.get('altura')?.errors?.['pattern']"
+    >Altura deve ser um número</span
+  >
+</ion-item>
+<ion-item class="input-personalizado">
+  <ion-input
+    label="Peso"
+    label-placement="floating"
+    fill="solid"
+    placeholder="Insira o peso"
+    formControlName="peso"
+  ></ion-input>
+  <span
+    *ngIf="form.get('peso')?.touched && form.get('peso')?.errors?.['required']"
+    >Peso é obrigatório</span
+  >
+  <span *ngIf="form.get('peso')?.touched && form.get('peso')?.errors?.['min']"
+    >Peso mínimo é 70 kg</span
+  >
+  <span *ngIf="form.get('peso')?.touched && form.get('peso')?.errors?.['max']"
+    >Peso máximo é 200 kg</span
+  >
+  <span
+    *ngIf="form.get('peso')?.touched && form.get('peso')?.errors?.['pattern']"
+    >Peso deve ser um número</span
+  >
+</ion-item>
+<ion-item class="input-personalizado">
+  <ion-input
+    label="Universidade"
+    label-placement="floating"
+    fill="solid"
+    placeholder="Insira a universidade"
+    formControlName="universidade"
+  ></ion-input>
+  <span
+    *ngIf="form.get('universidade')?.touched && form.get('universidade')?.errors?.['required']"
+    >Universidade é obrigatória</span
+  >
+  <span
+    *ngIf="form.get('universidade')?.touched && form.get('universidade')?.errors?.['minlength']"
+    >Universidade deve ter pelo menos 3 caracteres</span
+  >
+  <span
+    *ngIf="form.get('universidade')?.touched && form.get('universidade')?.errors?.['pattern']"
+    >Universidade deve conter apenas letras</span
+  >
+</ion-item>
+<ion-item class="input-personalizado">
+  <ion-select placeholder="Selecione a posição" formControlName="posicao">
+    <ion-select-option value="ShootingGuard">Shooting Guard</ion-select-option>
+    <ion-select-option value="PointGuard">Point Guard</ion-select-option>
+    <ion-select-option value="SmallForward">Small Forward</ion-select-option>
+    <ion-select-option value="PowerForward">Power Forward</ion-select-option>
+    <ion-select-option value="Center">Center</ion-select-option>
+  </ion-select>
+</ion-item>
