@@ -6,6 +6,7 @@ import { FirebaseService } from 'src/app/model/services/firestore.service';
 import { AuthService } from 'src/app/model/services/auth.service';
 import Jogador from 'src/app/model/entities/Jogador';
 
+
 @Component({
  selector: 'app-jogador',
  templateUrl: './jogador.component.html',

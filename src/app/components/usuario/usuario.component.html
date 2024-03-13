@@ -1,3 +1,4 @@
+<form [formGroup]="form">
 <ion-item>
   <ion-label position="floating">Email</ion-label>
   <ion-input type="email" formControlName="email"></ion-input>
@@ -12,4 +13,4 @@
 <!--Mensagem de Erro de Senha-->
 <span *ngIf="form.get('senha')?.touched && form.get('senha')?.errors?.['required']" >Senha é Obrigatória</span> <br />
 <span *ngIf="form.get('senha')?.dirty && form.get('senha')?.errors?.['minlength']">A Senha Precisa ter no Mínimo 6 Dígitos!</span>
- 
+</form>

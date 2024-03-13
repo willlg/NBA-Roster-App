@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-list>
-    <form [formGroup]="formEditar" (ngSubmit)="editar()">
+    <form>
     <ion-item class="input-personalizado">
       <ion-toggle (ionChange)="habilitar()">Alterar Dados</ion-toggle>
     </ion-item>
@@ -19,7 +19,7 @@
     <ion-button size="default" color="success" shape="round" disabled="{{edicao}}">
       <input type="file" (change)="uploadFile($event.target)"/>
     </ion-button>
-    <app-jogador [form]="formEditar"></app-jogador>
+    <app-jogador [form]="formEditar" (ngSubmit)="editar()"></app-jogador>
   </form>
  </ion-list>
 </ion-content>

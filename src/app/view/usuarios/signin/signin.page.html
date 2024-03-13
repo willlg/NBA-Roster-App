@@ -6,8 +6,8 @@
 
 <ion-content>
   <ion-list>
-    <form [formGroup]="formLogar" (ngSubmit)="submitForm()">
-    <app-usuario [form]="formLogar"></app-usuario>
+    <form>
+    <app-usuario [form]="formLogar" (ngSubmit)="submitForm()"></app-usuario>
     <ion-button expand="full" color="success" type="submit">Entrar</ion-button>
     <ion-button expand="full" color="danger" (click)="logarComGoogle()">
     Entrar com Google 
