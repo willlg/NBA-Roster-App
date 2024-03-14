@@ -6,14 +6,16 @@ import { IonicModule } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingJogadorComponent } from './loading-jogador/loading-jogador.component';
 import { LoadingHomeComponent } from './loading-home/loading-home.component';
+import { JogadorHeaderComponent } from './jogador-header/jogador-header.component';
+import { UsuarioHeaderComponent } from './usuario-header/usuario-header.component';
 
 
 
 
 @NgModule({
-  declarations: [JogadorComponent, UsuarioComponent, LoadingJogadorComponent, LoadingHomeComponent],
+  declarations: [JogadorComponent, UsuarioComponent, LoadingJogadorComponent, LoadingHomeComponent, JogadorHeaderComponent,UsuarioHeaderComponent],
   imports: [
     CommonModule, IonicModule, ReactiveFormsModule],
-  exports: [UsuarioComponent, JogadorComponent, LoadingJogadorComponent, LoadingHomeComponent]
+  exports: [UsuarioComponent, JogadorComponent, LoadingJogadorComponent, LoadingHomeComponent, JogadorHeaderComponent, UsuarioHeaderComponent]
 })
 export class ComponentsModule { }

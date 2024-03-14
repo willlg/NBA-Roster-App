@@ -1,0 +1,13 @@
+.custom-title {
+    font-size: 14px;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+}
+
+ion-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+}
+      

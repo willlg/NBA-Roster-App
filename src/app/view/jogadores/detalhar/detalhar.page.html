@@ -1,13 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="titulo-personalizado">DETALHES DO JOGADOR</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-jogador-header [edicaao]="true"></app-jogador-header>
 
 <ion-content>
+  <app-loading-jogador *ngIf="isLoading"></app-loading-jogador>
   <ion-list>
     <form>
     <ion-item class="input-personalizado">
@@ -20,7 +14,6 @@
       <input type="file" (change)="uploadFile($event.target)"/>
     </ion-button>
     <app-jogador [form]="formEditar" (ngSubmit)="editar()"></app-jogador>
-    <app-loading-jogador *ngIf="isLoading"></app-loading-jogador>
   </form>
  </ion-list>
 </ion-content>
