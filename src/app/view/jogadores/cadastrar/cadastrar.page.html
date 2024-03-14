@@ -11,6 +11,7 @@
   <ion-list>
     <form >
       <app-jogador [form]="formCadastrarJ" (ngSubmit)="submitForm()"></app-jogador>
+      <app-loading-jogador *ngIf="isLoading"></app-loading-jogador>
       <ion-item>
         <ion-button size="default" color="success" shape="round" >
           <input type="file" (change)="uploadFile($event.target)" />

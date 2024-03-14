@@ -20,6 +20,7 @@
       <input type="file" (change)="uploadFile($event.target)"/>
     </ion-button>
     <app-jogador [form]="formEditar" (ngSubmit)="editar()"></app-jogador>
+    <app-loading-jogador *ngIf="isLoading"></app-loading-jogador>
   </form>
  </ion-list>
 </ion-content>

@@ -12,10 +12,11 @@ import { AuthService } from 'src/app/model/services/auth.service';
 export class HomePage {
   public lista_jogadores : Jogador[] = [];
   public user : any;
+  public isLoading: boolean = false;
 
   constructor(private firebase: FirebaseService, private router: Router, private authService: AuthService) {
     this.user = this.authService.getUserLogged();
-  
+    this.isLoading=true;
     if (this.user && this.user.uid) {
       console.log(this.authService.getUserLogged());
   
@@ -27,6 +28,7 @@ export class HomePage {
               ...jogador.payload.doc.data() as any
             } as Jogador;
           })
+          this.isLoading=false;
         });
     }
   }

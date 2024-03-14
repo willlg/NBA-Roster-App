@@ -29,6 +29,7 @@ export class DetalharPage implements OnInit {
   edicao: boolean = true;
   imagem!: any;  
   user: any;
+  isLoading: boolean = false;
 
   constructor(
     private alert: AlertService,
@@ -68,14 +69,17 @@ export class DetalharPage implements OnInit {
       let novo : Jogador = new Jogador(this.formEditar.value.nome, this.formEditar.value.idade, this.formEditar.value.altura, this.formEditar.value.peso, this.formEditar.value.universidade, this.formEditar.value.posicao);
       novo.id = this.jogador.id;
       novo.uid = this.user.uid;
+      this.isLoading = true;
       if (this.imagem) {
         this.firebase.uploadImage(this.imagem, novo);
+        this.isLoading = false;
         this.alert.presentAlert('Sucesso', 'Jogador alterado com sucesso!');
         this.router.navigate(['/home']);
       } else {
         this.firebase
           .update(novo, this.jogador.id)
           .then(() => {
+            this.isLoading = false;
             this.alert.presentAlert(
               'Sucesso',
               'Jogador alterado com sucesso!'
@@ -83,6 +87,7 @@ export class DetalharPage implements OnInit {
             this.router.navigate(['/home']);
           })
           .catch((error) => {
+            this.isLoading = false;
             console.error('Erro ao atualizar o jogador', error);
           });
       }

@@ -26,7 +26,7 @@
 
 
 <ion-content>
-
+  <app-loading-home *ngIf="isLoading"></app-loading-home>
   <ion-card *ngFor="let posicao of ['ShootingGuard', 'PointGuard', 'SmallForward', 'PowerForward', 'Center']">
     <ion-card-header>
       <ion-card-title style="color: #FF4500;" class="titulo-personalizado">{{ posicao | titlecase }}</ion-card-title>

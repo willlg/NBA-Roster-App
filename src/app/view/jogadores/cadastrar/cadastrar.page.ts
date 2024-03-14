@@ -23,6 +23,7 @@ export class CadastrarPage  implements OnInit {
   public posicao! : Posicao;
   public imagem: any;
   public user: any;
+  public isLoading: boolean = false;
 
   constructor(private alert: AlertService,
     private router : Router,
@@ -59,11 +60,14 @@ export class CadastrarPage  implements OnInit {
   }
 
   submitForm(): boolean {
+    this.isLoading = true;
     if (!this.formCadastrarJ.valid) {
       this.alert.presentAlert('Erro', 'Erro ao preencher o formulário');
+      this.isLoading =false;
       return false;
     } else {
       this.cadastrar();
+      this.isLoading =false;
       return true;
     }
   }
